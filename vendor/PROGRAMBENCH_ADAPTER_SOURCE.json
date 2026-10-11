@@ -1,0 +1,25 @@
+{
+  "source_project": "../code-testing-v1",
+  "programbench_repository": "https://github.com/facebookresearch/ProgramBench",
+  "pinned_revision": "27f02157c785f8da3647aa6dbbe6b9137f99f10e",
+  "files": [
+    {
+      "source": "/Users/baiyu/Documents/ChatGPT/Multiagent/code-testing-v1/codetest/probes.py",
+      "source_sha256": "18d914261e9cfad76e454ffa0a44aa9f803286e5b9c0b010b2b78eeedc13af23",
+      "destination": "ant_colony/programbench_probes.py",
+      "adaptation": "Copied local helper; pinned upstream scorer or reproducible black-box probes"
+    },
+    {
+      "source": "/Users/baiyu/Documents/ChatGPT/Multiagent/code-testing-v1/codetest/programbench_score.py",
+      "source_sha256": "47c7b47f407f9211be8e863cb4f5feac14faf21d1f42460fdcb0cfbd9c741ec1",
+      "destination": "ant_colony/programbench_score.py",
+      "adaptation": "Copied local helper; pinned upstream scorer or reproducible black-box probes"
+    },
+    {
+      "source": "/Users/baiyu/Documents/ChatGPT/Multiagent/code-testing-v1/codetest/budget.py",
+      "source_sha256": "a02cd6e316671ad470ab80173dcc9b1267552913a81a686f2253cb455f1b7f87",
+      "destination": "ant_colony/campaign_budget.py",
+      "adaptation": "Ledger-only excerpt; no provider or credential handling copied"
+    }
+  ]
+}

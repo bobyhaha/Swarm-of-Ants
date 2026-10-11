@@ -1,0 +1,15 @@
+{
+  "initial_agents": 6,
+  "max_agents": 64,
+  "max_rounds": 8,
+  "bank_contacts": 2,
+  "peer_contacts": 2,
+  "max_children": 2,
+  "work_turns": 2,
+  "initial_bank": 100000,
+  "max_grant": 20000,
+  "reward": 50000,
+  "token_price": 1,
+  "context_bytes": 24000,
+  "rent_per_round": 0
+}

@@ -1,0 +1,2 @@
+{"id":"sum-100","kind":"exact","problem":"Compute the sum of the integers 1 through 100 inclusive. Submit only the integer.","answer":"5050"}
+{"id":"consecutive-product","kind":"research","problem":"Prove that the product of any three consecutive integers is divisible by 6.","rubric":"Points: 1, Item: Establish that at least one of three consecutive integers is divisible by 3. Points: 1, Item: Establish that at least one is even. Points: 1, Item: Explain that coprimality of 2 and 3 gives divisibility by 6 for the product, including all integer cases."}

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ant colony · Run replay</title>
+  <style>
+    :root { color-scheme:light dark; --bg:light-dark(#f7f6f1,#171c1a); --fg:light-dark(#1b3026,#e3ece5); --muted:light-dark(#55655c,#b0c0b6); --line:light-dark(#cbd4cb,#41554a); --panel:light-dark(#fff,#223128); --accent:light-dark(#285c42,#a5d6b5); }
+    * {box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,sans-serif}
+    main{max-width:1200px;margin:auto;padding:32px 24px} h1{font-size:32px;font-weight:550;letter-spacing:-1px;margin:0}
+    h2{font-size:18px;font-weight:550;margin:0 0 16px} p{margin:8px 0;color:var(--muted)}
+    .eyebrow{letter-spacing:2px;text-transform:uppercase;font-size:12px} .top{margin-bottom:28px}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0}
+    .stat{padding:16px;background:var(--panel);border-radius:8px} .stat strong{display:block;font-size:26px;font-weight:550;font-variant-numeric:tabular-nums}
+    .stat span{font-size:13px;color:var(--muted)} .control{display:flex;align-items:center;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+    input{accent-color:var(--accent);flex:1;min-width:180px} button,select{font:inherit;background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:5px;padding:6px 12px}
+    .columns{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:32px}
+    .team{padding:16px 0;border-top:1px solid var(--line)} .team h3{font-size:15px;margin:0 0 10px;font-weight:550}
+    .tree,.tree ul{list-style:none;padding-left:16px;margin:8px 0}.tree{padding:0}.tree ul{border-left:1px solid var(--line);margin-left:10px}
+    .tree li{margin:8px 0;overflow-wrap:anywhere}.node{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+    .node small{color:var(--muted);font-size:12px}.sleep{font-style:italic}.bank{padding:14px 18px;background:var(--accent);color:var(--bg);border-radius:6px;margin-bottom:16px;font-weight:550}
+    .events{list-style:none;margin:0;padding:0}.events li{padding:10px 0;border-top:1px solid var(--line);overflow-wrap:anywhere}.events small{color:var(--muted)}
+    .phase{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:1px}.answer{white-space:pre-wrap;overflow-wrap:anywhere;padding:16px;background:var(--panel);border-radius:8px}
+    footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+    .metric{display:flex;justify-content:space-between;gap:16px;margin:6px 0;font-variant-numeric:tabular-nums}
+    @media(max-width:760px){.columns{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}main{padding:20px 16px}h1{font-size:28px}}
+    @media print{button,input{display:none}.columns{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+<main>
+  <header class="top"><div class="eyebrow">Economy of Minds / Cooperative society</div><h1>Ant colony run replay</h1><p id="description"></p></header>
+  <div class="stats" aria-live="polite">
+    <div class="stat"><span>Society wealth · credits</span><strong id="wealth"></strong></div>
+    <div class="stat"><span>Bank · credits</span><strong id="bank"></strong></div>
+    <div class="stat"><span>Generated-token costs + rent</span><strong id="burned"></strong></div>
+    <div class="stat"><span>Living agents</span><strong id="population"></strong></div>
+  </div>
+  <div class="control"><label for="round">Round <output id="round-label"></output></label><button id="prev" type="button">Previous</button><input id="round" type="range" min="0" value="0" step="1"><button id="next" type="button">Next</button></div>
+  <section style="margin-bottom:28px"><h2>Bank board · directions and ownership</h2><p id="bank-brief"></p><div id="board"></div></section>
+  <div class="columns">
+    <section><h2>Grants and recursive teams</h2><div id="tree"></div><p id="unfunded"></p></section>
+    <section><h2>Recorded decisions</h2><div class="control"><label for="event-type">Show</label><select id="event-type"><option value="all">All decisions</option><option value="proposal">Proposals</option><option value="proposal_review">Feedback</option><option value="application_sponsored">Sponsorship</option><option value="coding_tool">Coding tools</option><option value="checkpoint_integrated">Code integration</option><option value="checkpoint_conflict">Merge conflicts</option><option value="checkpoint_test">Checkpoint tests</option><option value="checkpoint_exported">Artifact export</option><option value="grant">Grants</option><option value="spawn">Spawns</option><option value="hire">Hiring</option><option value="sleep">Sleep</option><option value="action_rejected">Rejected actions</option></select></div><ul class="events" id="events"></ul></section>
+  </div>
+  <section style="margin-top:32px"><h2>Terminal result</h2><div class="answer" id="answer"></div><p id="settled"></p></section>
+  <section style="margin-top:24px"><h2>Measured coordination</h2><div id="metrics"></div></section>
+  <footer>Wallets are assets. Agent allowances are rights to spend those same assets, so they are not added to society wealth. Snapshots precede final grant repayment. This viewer makes no network requests.</footer>
+</main>
+<script id="colony-data" type="application/json">__COLONY_DATA__</script>
+<script>
+(() => {
+  'use strict';
+  const data=JSON.parse(document.getElementById('colony-data').textContent);
+  const el=id=>document.getElementById(id), format=x=>Number(x).toLocaleString();
+  const report=data.report||{}, states=data.states;
+  el('description').textContent=(report.scripted_demo?'SCRIPTED DEMO · estimated tokens · no emergence claim':'Recorded experiment')+' · '+(report.task_id||'')+' · '+(report.status||'incomplete');
+  el('answer').textContent=report.final_answer??'No final answer was submitted.';
+  el('settled').textContent='After grant repayment: bank '+format(report.bank||0)+' credits. External reward: '+format(report.rewarded||0)+'. API cost: $'+(report.api_spent_usd||'0')+'.';
+  const metric=(label,value)=>{const d=document.createElement('div');d.className='metric';const a=document.createElement('span'),b=document.createElement('span');a.textContent=label;b.textContent=value;d.append(a,b);el('metrics').append(d);};
+  metric('Peak population',data.metrics.peak_agents);metric('Maximum recruitment depth',data.metrics.max_depth);metric('Maximum direct children',data.metrics.max_direct_children);
+  metric('Largest input / configured byte cap',format(report.max_context_bytes||0)+' / '+format(report.context_cap_bytes||0));
+  for(const [phase,tokens] of Object.entries(data.metrics.phase_tokens))metric(phase+' output tokens',format(tokens));
+  el('round').max=Math.max(0,states.length-1);el('round').value=Math.max(0,states.length-1);
+  function render(){
+    const state=states[Number(el('round').value)]; if(!state){el('tree').textContent='No completed round snapshots.';return;}
+    el('round-label').textContent=state.round;el('wealth').textContent=format(state.wealth);el('bank').textContent=format(state.bank);el('burned').textContent=format(state.burned);el('population').textContent=state.agents.length;
+    el('prev').disabled=Number(el('round').value)===0;el('next').disabled=Number(el('round').value)===states.length-1;
+    const agents=Object.fromEntries(state.agents.map(a=>[a.id,a]));el('tree').replaceChildren();
+    el('bank-brief').textContent=state.bank_brief||'';el('board').replaceChildren();
+    const tasks=state.bank_board?.tasks||[];
+    for(const task of tasks){const card=document.createElement('div');card.className='team';const title=document.createElement('h3'),scope=document.createElement('p'),check=document.createElement('p'),feedback=document.createElement('p');title.textContent=task.id+' · '+task.title+' · '+task.status+(task.owner?' · '+task.owner+' / '+task.team:'');scope.textContent=task.scope;check.textContent='Acceptance: '+task.acceptance;feedback.textContent=task.feedback||'';card.append(title,scope,check,feedback);el('board').append(card);}
+    if(!tasks.length)el('board').textContent='No bank board in this round.';
+    const bank=document.createElement('div');bank.className='bank';bank.textContent='BANK · '+format(state.bank)+' credits';el('tree').append(bank);
+    for(const team of state.teams){
+      const section=document.createElement('div');section.className='team';const h=document.createElement('h3');h.textContent=team.id+' · shared grant '+format(Object.values(team.allowances).reduce((a,b)=>a+b,0))+' · expires round '+team.expires;section.append(h);
+      function branch(id){const agent=agents[id],li=document.createElement('li'),node=document.createElement('div'),name=document.createElement('span'),detail=document.createElement('small');node.className='node';name.textContent=id+(id===team.manager?' · budget manager':'');detail.textContent=agent.model+' · '+format(team.allowances[id])+' spend rights'+(agent.wake_round>state.round?' · asleep until '+agent.wake_round:'');node.append(name,detail);li.append(node);const specialization=document.createElement('details'),summary=document.createElement('summary'),description=document.createElement('p');summary.textContent='Chosen strategy and current assignment';description.textContent=(agent.strategy||'Not recorded')+' — '+(agent.assignment||'');specialization.append(summary,description);li.append(specialization);if(agent.children.length){const ul=document.createElement('ul');for(const child of agent.children)ul.append(branch(child));li.append(ul);}return li;}
+      const tree=document.createElement('ul');tree.className='tree';tree.append(branch(team.manager));section.append(tree);el('tree').append(section);
+    }
+    const unteamed=state.agents.filter(a=>!a.team);el('unfunded').textContent=unteamed.length+' agents outside teams.';
+    el('events').replaceChildren();
+    const shown=data.events.filter(e=>e.round===state.round&&(el('event-type').value==='all'||e.event===el('event-type').value));
+    for(const event of shown){const li=document.createElement('li'),phase=document.createElement('div'),body=document.createElement('div');phase.className='phase';phase.textContent=event.phase+' / '+event.event;const copy={...event};for(const k of ['seq','round','phase','event','strategy'])delete copy[k];body.textContent=Object.entries(copy).map(([k,v])=>k+': '+(typeof v==='object'?JSON.stringify(v):v)).join(' · ');li.append(phase,body);el('events').append(li);}
+    if(!shown.length){const li=document.createElement('li');li.textContent='No matching decisions in this round.';el('events').append(li);}
+  }
+  el('round').addEventListener('input',render);el('event-type').addEventListener('change',render);
+  el('prev').addEventListener('click',()=>{el('round').value=Math.max(0,Number(el('round').value)-1);render();});
+  el('next').addEventListener('click',()=>{el('round').value=Math.min(states.length-1,Number(el('round').value)+1);render();});render();
+})();
+</script>
+</body></html>

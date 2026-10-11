@@ -1,0 +1,25 @@
+{
+  "initial_agents": 6,
+  "max_agents": 12,
+  "max_rounds": 10,
+  "bank_contacts": 2,
+  "manager_contacts": 2,
+  "max_children": 2,
+  "max_depth": 4,
+  "work_turns": 4,
+  "initial_bank": 2000000,
+  "max_grant": 250000,
+  "application_budget": 100000,
+  "max_revisions": 2,
+  "grant_rounds": 10,
+  "reward": 1000000,
+  "max_output_tokens": 8192,
+  "context_bytes": 64000,
+  "rent_per_round": 0,
+  "bank_model": "bank",
+  "worker_models": [
+    "worker"
+  ],
+  "coding_output_bytes": 16000,
+  "bank_board_size": 6
+}

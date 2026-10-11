@@ -1,0 +1,14 @@
+{
+  "bank": {
+    "id": "REPLACE_WITH_STRONG_MODEL_ID",
+    "input_usd_per_million": 5,
+    "output_usd_per_million": 20,
+    "input_token_ceiling": 65536
+  },
+  "worker": {
+    "id": "REPLACE_WITH_SMALL_MODEL_ID",
+    "input_usd_per_million": 1,
+    "output_usd_per_million": 5,
+    "input_token_ceiling": 65536
+  }
+}

@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eom-ant-colony"
+version = "0.3.0"
+description = "Shared-treasury, bounded-context collaborative agents derived from Economy of Minds"
+requires-python = ">=3.11"
+dependencies = ["rich>=13,<15", "pydantic>=2,<3", "tqdm>=4,<5"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "ruff>=0.12,<1"]
+campaign = ["requests>=2,<3"]
+
+[project.scripts]
+ant-colony = "ant_colony.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["ant_colony*", "hayekmas*"]
+
+[tool.setuptools.package-data]
+ant_colony = ["replay.html"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 110
+exclude = ["hayekmas", "vendor"]
+
+[tool.ruff.lint]
+select = ["E9", "F"]

@@ -1,0 +1,6 @@
+{
+  "source": "/Users/baiyu/Documents/ChatGPT/Multiagent/code-testing-v1/codetest/sandbox.py",
+  "source_sha256": "b98497ec3625198a67182dc5752de825e8b775750e92454f0c6497cff359b855",
+  "copied": "DockerSandbox, copy_source, safe_extract and run; Repository and unused imports omitted; formatted locally",
+  "purpose": "Reuse existing local network-isolated Commit0 runtime without importing sibling projects"
+}

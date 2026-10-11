@@ -1,0 +1,74 @@
+{
+  "repository": "https://github.com/zhentingqi/EoM",
+  "commit": "d272266f7d6a0c302b7af5d20f1326b63c5656fb",
+  "files": {
+    "hayekmas/__init__.py": {
+      "upstream_sha256": "b2b2cb64c3693fdd192113b18c178776fd4e907c5300c0425b19521e949bbf01",
+      "modified": true
+    },
+    "hayekmas/adapters/__init__.py": {
+      "upstream_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modified": false
+    },
+    "hayekmas/adapters/researchworld/__init__.py": {
+      "upstream_sha256": "9ae0206d4d3432f14a13fa53dd516e2c0b0c4f507f337edef900fd0e20d28330",
+      "modified": true
+    },
+    "hayekmas/adapters/researchworld/agent.py": {
+      "upstream_sha256": "3410ad97dd06e65e3b184b45c0d5ad82eeecc51cd3552616de897526a1c9a591",
+      "modified": false
+    },
+    "hayekmas/adapters/researchworld/env.py": {
+      "upstream_sha256": "0d5e06765031f8d9d15f413b2462fb32c9c42f056d52d0eb77bd565bd8ead1ff",
+      "modified": false
+    },
+    "hayekmas/adapters/researchworld/prompts.py": {
+      "upstream_sha256": "63059032a4996b728e239da0cd687e5ecf3ffcc2383aea4ae6be2beeaac22671",
+      "modified": false
+    },
+    "hayekmas/base/__init__.py": {
+      "upstream_sha256": "60a1b32ad83b4333e23264b97af2ffa2af6b7af54ac94a8e0b373aa616c2ecdc",
+      "modified": true
+    },
+    "hayekmas/base/agent.py": {
+      "upstream_sha256": "0fee568d3762577be9776cc9bd9168eabc962410516ef26e7201288362f58092",
+      "modified": false
+    },
+    "hayekmas/base/config.py": {
+      "upstream_sha256": "abcf78b2fbcd8459c2e57d45e713fd07494d462ebf6c0ca09c1ea7543f66b238",
+      "modified": false
+    },
+    "hayekmas/base/env.py": {
+      "upstream_sha256": "098be6493d61ba646e5f8c63807401ce211cffbf54340bfb931aae1c544a9e7d",
+      "modified": false
+    },
+    "hayekmas/base/mas.py": {
+      "upstream_sha256": "e4f5e85314d570500eb0a23856ba3e9843e984d27e640ec108de6f2024639186",
+      "modified": false
+    },
+    "hayekmas/base/pipeline.py": {
+      "upstream_sha256": "b154efd73cf03dfa93f0310956229951dd9aacda61ec304185ee249517cd4f3a",
+      "modified": false
+    },
+    "hayekmas/base/population.py": {
+      "upstream_sha256": "281b29ca03b2f9529629e9c3b8bb6698fe7038f9fd2a8ee827dd4fe74cae8eef",
+      "modified": false
+    },
+    "hayekmas/base/prompts.py": {
+      "upstream_sha256": "95f52ca7d813f60f9ca83660d24aa78b49c91e58b4600a343adfdebeb98fdc69",
+      "modified": false
+    },
+    "hayekmas/utils/__init__.py": {
+      "upstream_sha256": "a0d045d45faaf7e854db7290fb2ea15a396265225579dad3d1ccfa8d9041f9d9",
+      "modified": false
+    },
+    "hayekmas/utils/llm.py": {
+      "upstream_sha256": "00a8563b9bce97870b4f2d38bec4680be8d313da02a8b968f996f78e75f88aa3",
+      "modified": false
+    },
+    "hayekmas/utils/logger.py": {
+      "upstream_sha256": "816991f8fae2884ae8956c8725f58950dfbdc258f6708fb9579f9e7643698db4",
+      "modified": false
+    }
+  }
+}

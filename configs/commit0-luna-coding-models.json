@@ -1,0 +1,22 @@
+{
+  "bank": {
+    "id": "openai/gpt-6-luna",
+    "input_usd_per_million": 0.2,
+    "output_usd_per_million": 1,
+    "input_token_ceiling": 100000,
+    "reasoning_effort": "low",
+    "provider_ignore": [
+      "openai/flex"
+    ]
+  },
+  "worker": {
+    "id": "openai/gpt-6-luna",
+    "input_usd_per_million": 0.2,
+    "output_usd_per_million": 1,
+    "input_token_ceiling": 100000,
+    "reasoning_effort": "low",
+    "provider_ignore": [
+      "openai/flex"
+    ]
+  }
+}

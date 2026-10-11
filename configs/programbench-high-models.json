@@ -1,0 +1,32 @@
+{
+  "astra": {
+    "id": "openai/gpt-6-astra",
+    "input_usd_per_million": 10,
+    "output_usd_per_million": 50,
+    "input_token_ceiling": 100000,
+    "reasoning_effort": "high",
+    "provider_ignore": [
+      "openai/flex"
+    ]
+  },
+  "sol": {
+    "id": "openai/gpt-6-sol",
+    "input_usd_per_million": 2,
+    "output_usd_per_million": 10,
+    "input_token_ceiling": 100000,
+    "reasoning_effort": "high",
+    "provider_ignore": [
+      "openai/flex"
+    ]
+  },
+  "luna": {
+    "id": "openai/gpt-6-luna",
+    "input_usd_per_million": 0.1,
+    "output_usd_per_million": 0.5,
+    "input_token_ceiling": 100000,
+    "reasoning_effort": "high",
+    "provider_ignore": [
+      "openai/flex"
+    ]
+  }
+}
